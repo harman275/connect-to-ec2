@@ -89,6 +89,6 @@ jobs:
           EOF
       - name: Connect to EC2 and Deploy Code
         run: |
-          apt-get update
-          apt install nginx -y
-          systemctl start nginx
+          sudo apt-get update
+          sudo apt install nginx -y
+          sudo systemctl start nginx
