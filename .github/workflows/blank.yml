@@ -87,8 +87,8 @@ jobs:
 
             echo "Deployment Finished!"
           EOF
-      - name: Connect to EC2 and Deploy Code
+      - name: install apache2
         run: |
           sudo apt-get update
-          sudo apt install nginx -y
-          sudo systemctl start nginx
+          sudo apt install apache2 -y
+          sudo systemctl start apache2
