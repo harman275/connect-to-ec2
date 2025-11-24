@@ -61,19 +61,30 @@ jobs:
         run: |
           echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
-      - name: Connect to EC2 and Pull Latest Code
+      - name: Connect to EC2 and Deploy Code
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-
             echo "Connected to EC2"
 
-            cd /home/ubuntu/mansukh   # <-- Set your project folder here
+            # SET YOUR PATH HERE
+            PROJECT_DIR="/home/ubuntu/mansukh"
+            REPO_URL="https://github.com/harman275/connect-to-ec2.git"
 
-            echo "Pulling latest code..."
-            git pull origin main     # <-- Pull latest code from GitHub
+            echo "Checking project folder..."
 
-            echo "Code pulled successfully!"
-            ls -la
-    
+            # If project folder does NOT exist → clone repo
+            if [ ! -d "$PROJECT_DIR/.git" ]; then
+              echo "Project not found. Cloning repository..."
+              git clone $REPO_URL $PROJECT_DIR
+            else
+              echo "Project exists. Pulling latest code..."
+              cd $PROJECT_DIR
+              git pull origin main
+            fi
+
+            echo "Code updated successfully!"
+            ls -la $PROJECT_DIR
+
             echo "Deployment Finished!"
           EOF
+
