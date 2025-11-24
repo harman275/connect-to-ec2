@@ -67,7 +67,7 @@ jobs:
             echo "Connected to EC2"
 
             # SET YOUR PATH HERE
-            PROJECT_DIR="/home/ubuntu/mansukh"
+            PROJECT_DIR="/home/ubuntu/myapp"
             REPO_URL="https://github.com/harman275/connect-to-ec2.git"
 
             echo "Checking project folder..."
