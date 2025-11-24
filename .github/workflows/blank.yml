@@ -89,6 +89,21 @@ jobs:
           EOF
       - name: install apache2
         run: |
-          sudo apt-get update
-          sudo apt install apache2 -y
-          sudo systemctl start apache2
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            echo "Connected to EC2"
+
+            echo "Updating packages..."
+            sudo apt update -y
+
+            echo "Installing NGINX..."
+            sudo apt install -y nginx
+
+            echo "Starting NGINX..."
+            sudo systemctl start nginx
+            sudo systemctl enable nginx
+
+            echo "Checking NGINX status..."
+            sudo systemctl status nginx --no-pager
+
+            echo "NGINX Installed Successfully!"
+          EOF
